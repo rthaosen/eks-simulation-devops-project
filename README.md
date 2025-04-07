@@ -73,7 +73,6 @@ Pipeline: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 
 ### 🟢 Local Kubernetes Monitoring Workflow (Kind + Helm + Prometheus + Grafana)
 
-```mermaid
 graph TD
   A[run-local.sh script] --> B[Kind Cluster]
   
@@ -100,7 +99,6 @@ graph TD
 
 ### 🟡 Production Monitoring Architecture with Terraform, Ansible, and Kubernetes
 
-```mermaid
 graph TD
   subgraph IaC Setup
     T[Terraform]
