@@ -1,0 +1,41 @@
+adminUser: admin
+adminPassword: admin
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus-server.monitoring.svc.cluster.local
+        isDefault: true
+
+grafana.ini:
+  panels:
+    disable_sanitize_html: true
+  paths:
+    data: /var/lib/grafana/
+  analytics:
+    check_for_updates: false
+  dashboards:
+    default_home_dashboard_path: /var/lib/grafana/dashboards/default/cluster-overview.json
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboardsConfigMaps:
+  default: cluster-overview-dashboard
+
+persistence:
+  enabled: false

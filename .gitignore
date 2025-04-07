@@ -1,0 +1,37 @@
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+crash.log
+
+# Ansible
+*.retry
+
+# Helm
+*.tgz
+charts/
+
+# Kubernetes
+.kube/
+*.log
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Python virtualenv (if used)
+venv/
+__pycache__/
+
+# Node (if frontend ever added)
+node_modules/
+
+# Draw.io temp files
+*.drawio~*
+
+# GitHub Actions artifacts
+.github/workflows/*.bak

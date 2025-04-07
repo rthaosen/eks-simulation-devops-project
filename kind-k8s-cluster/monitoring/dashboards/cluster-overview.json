@@ -1,0 +1,131 @@
+{
+    "uid": "k8s-cluster-overview",
+    "dashboard": {
+        "id": null,
+        "title": "K8s Cluster Overview",
+        "timezone": "browser",
+        "schemaVersion": 36,
+        "version": 1,
+        "panels": [
+            {
+                "type": "text",
+                "title": "Welcome",
+                "gridPos": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 24,
+                    "h": 3
+                },
+                "options": {
+                    "content": "## Kubernetes Cluster Dashboard",
+                    "mode": "markdown"
+                }
+            },
+            {
+                "type": "graph",
+                "title": "Cluster CPU Usage",
+                "datasource": "Prometheus",
+                "targets": [
+                    {
+                        "expr": "sum(rate(container_cpu_usage_seconds_total{image!=\"\"}[5m]))",
+                        "legendFormat": "CPU Cores",
+                        "refId": "A"
+                    }
+                ],
+                "gridPos": {
+                    "x": 0,
+                    "y": 3,
+                    "w": 12,
+                    "h": 8
+                }
+            },
+            {
+                "type": "graph",
+                "title": "Cluster Memory Usage",
+                "datasource": "Prometheus",
+                "targets": [
+                    {
+                        "expr": "sum(container_memory_usage_bytes{image!=\"\"})",
+                        "legendFormat": "Bytes",
+                        "refId": "A"
+                    }
+                ],
+                "gridPos": {
+                    "x": 12,
+                    "y": 3,
+                    "w": 12,
+                    "h": 8
+                }
+            },
+            {
+                "type": "stat",
+                "title": "Running Pods",
+                "datasource": "Prometheus",
+                "targets": [
+                    {
+                        "expr": "count(kube_pod_status_phase{phase=\"Running\"})",
+                        "refId": "A"
+                    }
+                ],
+                "gridPos": {
+                    "x": 0,
+                    "y": 11,
+                    "w": 6,
+                    "h": 4
+                }
+            },
+            {
+                "type": "stat",
+                "title": "Pending Pods",
+                "datasource": "Prometheus",
+                "targets": [
+                    {
+                        "expr": "count(kube_pod_status_phase{phase=\"Pending\"})",
+                        "refId": "A"
+                    }
+                ],
+                "gridPos": {
+                    "x": 6,
+                    "y": 11,
+                    "w": 6,
+                    "h": 4
+                }
+            },
+            {
+                "type": "stat",
+                "title": "Failed Pods",
+                "datasource": "Prometheus",
+                "targets": [
+                    {
+                        "expr": "count(kube_pod_status_phase{phase=\"Failed\"})",
+                        "refId": "A"
+                    }
+                ],
+                "gridPos": {
+                    "x": 12,
+                    "y": 11,
+                    "w": 6,
+                    "h": 4
+                }
+            },
+            {
+                "type": "stat",
+                "title": "Container Restarts",
+                "datasource": "Prometheus",
+                "targets": [
+                    {
+                        "expr": "sum(rate(kube_pod_container_status_restarts_total[5m]))",
+                        "refId": "A"
+                    }
+                ],
+                "gridPos": {
+                    "x": 18,
+                    "y": 11,
+                    "w": 6,
+                    "h": 4
+                }
+            }
+        ]
+    },
+    "overwrite": true
+}

@@ -1,0 +1,11 @@
+- name: Install packages and deploy app
+  hosts: all
+  become: true
+  tasks:
+    - name: Update cache
+      apt:
+        update_cache: yes
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present

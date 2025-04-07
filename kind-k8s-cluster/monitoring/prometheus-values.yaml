@@ -1,0 +1,11 @@
+alertmanager:
+  enabled: true
+server:
+  global:
+    scrape_interval: 15s
+  service:
+    type: ClusterIP
+  resources:
+    requests:
+      memory: 100Mi
+      cpu: 100m
