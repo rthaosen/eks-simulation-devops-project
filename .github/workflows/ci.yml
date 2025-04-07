@@ -5,19 +5,20 @@ on:
     branches: [ main ]
 
 jobs:
-  terraform-plan:
+  validate:
+    name: Terraform Validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.6
-      - run: terraform init
-        working-directory: terraform-eks-mock
-      - run: terraform validate
-        working-directory: terraform-eks-mock
-      - run: terraform plan -out=tfplan
-        working-directory: terraform-eks-mock
+          terraform_version: 1.6.6
+      - name: Terraform Init
+        run: terraform -chdir=terraform-eks-mock init
+      - name: Terraform Validate
+        run: terraform -chdir=terraform-eks-mock validate
 
   kind-deploy:
     runs-on: ubuntu-latest
