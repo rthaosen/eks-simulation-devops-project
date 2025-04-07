@@ -29,7 +29,8 @@ jobs:
           chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
       - name: Install kubectl
         run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          KUBECTL_VERSION="v1.27.9"  # or whatever you're using in your EKS cluster
+          curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
           chmod +x kubectl && sudo mv kubectl /usr/local/bin/
       - name: Install Helm
         run: |
