@@ -148,6 +148,16 @@ graph TD
 
 ---
 
+## ⚠️ Disclaimer
+Note: This project is designed for local use only.
+While it simulates AWS EKS using Kind and includes Terraform/Ansible mock configurations, it has not been fully developed or tested for production use on AWS.
+The Terraform code is mocked and does not provision real AWS infrastructure
+Ansible is used for lightweight local provisioning, not full cloud automation
+The GitHub Actions pipeline runs locally with mocked steps — not intended for cloud deployments
+🛠️ This project is meant as a learning/demo environment, ideal for showcasing your DevOps skills without incurring cloud costs.
+
+---
+
 ### ✅ Notes
 
 - **Terraform** provisions the infrastructure (e.g., EC2, VPC, EKS, etc.).
