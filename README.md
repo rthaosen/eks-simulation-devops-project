@@ -73,66 +73,63 @@ Pipeline: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 
 ### 🟢 Local Kubernetes Monitoring Workflow (Kind + Helm + Prometheus + Grafana)
 
+```mermaid
 graph TD
   A[run-local.sh script] --> B[Kind Cluster]
   
   B --> C[Sample App (hello-release)]
-  C -->|Uses| C1[NGINX Docker Image]
+  C --> C1[NGINX Docker Image]
   
   B --> D[Prometheus]
   B --> E[Grafana]
 
-  D -->|Scrapes Metrics| F[Kubernetes Nodes/Pods]
-  E -->|Uses Datasource| D
-  E -->|Loads| G[Cluster Overview Dashboard (JSON)]
+  D --> F[Kubernetes Nodes/Pods]
+  E --> D
+  E --> G[Cluster Overview Dashboard (JSON)]
 
-  G1[dashboard-configmap.yaml](kind-k8s-cluster/monitoring/dashboard-configmap.yaml) --> G
-  G2[grafana-values.yaml](kind-k8s-cluster/monitoring/grafana-values.yaml)
- --> E
-  D1[prometheus-values.yaml](kind-k8s-cluster/monitoring/prometheus-values.yaml) --> D
+  G1[dashboard-configmap.yaml] --> G
+  G2[grafana-values.yaml] --> E
+  D1[prometheus-values.yaml] --> D
 
-  C -->|Port-Forwarded| H1[localhost:8080]
-  E -->|Port-Forwarded| H2[localhost:3000]
-  D -->|Port-Forwarded| H3[localhost:9090]
+  C --> H1[localhost:8080]
+  E --> H2[localhost:3000]
+  D --> H3[localhost:9090]
+```
 
 
 
 ### 🟡 Production Monitoring Architecture with Terraform, Ansible, and Kubernetes
 
+```mermaid
 graph TD
-  subgraph IaC Setup
-    T[Terraform]
-    T -->|Provision| C1[Cloud Infrastructure (VMs, Load Balancer, etc.)]
-    A[Ansible]
-    A -->|Configure| C1
+  subgraph IaC_Setup
+    T[Terraform] --> C1[Cloud Infra (VMs, LB, etc.)]
+    A[Ansible] --> C1
   end
 
-  subgraph Kubernetes Cluster
-    K8s[Kubernetes Cluster]
-    C1 --> K8s
-
-    K8s --> APP[Production App (e.g., Web App)]
-    APP -->|Uses| NGINX[NGINX Container]
-
+  subgraph Kubernetes_Cluster
+    C1 --> K8s[Kubernetes Cluster]
+    K8s --> APP[Production App (Web App)]
+    APP --> NGINX[NGINX Container]
     K8s --> PROM[Prometheus]
     K8s --> GRAF[Grafana]
-
-    PROM -->|Scrapes| METRICS[Cluster Metrics]
-    GRAF -->|Displays| DASHBOARD[Monitoring Dashboards]
-    GRAF -->|Uses| PROM
+    PROM --> METRICS[Cluster Metrics]
+    GRAF --> DASHBOARD[Monitoring Dashboards]
+    GRAF --> PROM
   end
 
-  subgraph CI/CD (Optional)
-    GIT[GitHub Repo]
-    GIT -->|Trigger| CI[CI Pipeline]
-    CI -->|Deploy| APP
+  subgraph CI_CD
+    GIT[GitHub Repo] --> CI[CI Pipeline]
+    CI --> APP
   end
 
-  subgraph Access Points
-    GRAF -->|Exposed| GRAF_UI[Grafana UI :3000]
-    PROM -->|Exposed| PROM_UI[Prometheus UI :9090]
-    APP -->|Exposed| APP_UI[App UI :80/443]
+  subgraph Access
+    GRAF --> GRAF_UI[Grafana UI :3000]
+    PROM --> PROM_UI[Prometheus UI :9090]
+    APP --> APP_UI[App UI :80/443]
   end
+```
+
 
 ---
 
