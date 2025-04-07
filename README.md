@@ -75,25 +75,22 @@ Pipeline: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 
 ```mermaid
 graph TD
-  A[run-local.sh script] --> B[Kind Cluster]
+  A["run-local.sh script"] --> B["Kind Cluster"]
   
-  B --> C[Sample App (hello-release)]
-  C --> C1[NGINX Docker Image]
+  B --> C["Sample App (hello-release)"]
+  C --> C1["NGINX Docker Image"]
   
   B --> D[Prometheus]
   B --> E[Grafana]
 
-  D --> F[Kubernetes Nodes/Pods]
+  D --> F["Kubernetes Nodes/Pods"]
   E --> D
-  E --> G[Cluster Overview Dashboard (JSON)]
+  E --> G["Cluster Overview Dashboard (JSON)"]
 
-  G1[dashboard-configmap.yaml] --> G
-  G2[grafana-values.yaml] --> E
-  D1[prometheus-values.yaml] --> D
+  C --> H1["localhost:8080"]
+  E --> H2["localhost:3000"]
+  D --> H3["localhost:9090"]
 
-  C --> H1[localhost:8080]
-  E --> H2[localhost:3000]
-  D --> H3[localhost:9090]
 ```
 
 
@@ -103,32 +100,40 @@ graph TD
 ```mermaid
 graph TD
   subgraph IaC_Setup
-    T[Terraform] --> C1[Cloud Infra (VMs, LB, etc.)]
+    T[Terraform] --> C1["Cloud Infra (VMs, LB, etc.)"]
     A[Ansible] --> C1
   end
 
   subgraph Kubernetes_Cluster
-    C1 --> K8s[Kubernetes Cluster]
-    K8s --> APP[Production App (Web App)]
-    APP --> NGINX[NGINX Container]
+    C1 --> K8s["Kubernetes Cluster"]
+    K8s --> APP["Production App (Web App)"]
+    APP --> NGINX["NGINX Container"]
     K8s --> PROM[Prometheus]
     K8s --> GRAF[Grafana]
-    PROM --> METRICS[Cluster Metrics]
-    GRAF --> DASHBOARD[Monitoring Dashboards]
+    PROM --> METRICS["Cluster Metrics"]
+    GRAF --> DASHBOARD["Monitoring Dashboards"]
     GRAF --> PROM
   end
 
   subgraph CI_CD
-    GIT[GitHub Repo] --> CI[CI Pipeline]
+    GIT["GitHub Repo"] --> CI["CI Pipeline"]
     CI --> APP
   end
 
   subgraph Access
-    GRAF --> GRAF_UI[Grafana UI :3000]
-    PROM --> PROM_UI[Prometheus UI :9090]
-    APP --> APP_UI[App UI :80/443]
+    GRAF --> GRAF_UI["Grafana UI :3000"]
+    PROM --> PROM_UI["Prometheus UI :9090"]
+    APP --> APP_UI["App UI :80/443"]
   end
+
 ```
+---
+
+## 📸 Screenshots
+
+| App UI (localhost:8080) | Grafana Dashboard (localhost:3000) |
+|-------------------------|-------------------------------------|
+| ![App Screenshot](Screenshots/sample-app.png) | ![Grafana Screenshot](Screenshots/grafana-dashboard.png) |
 
 
 ---
